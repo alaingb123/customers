@@ -46,7 +46,10 @@ export class CustomersController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: ObjectId) {
+  remove(@Param('id') id: ObjectId,@Request() request) {
+    if(request.status!=="admin"){
+      throw new UnauthorizedException()
+    }
     return this.customersService.remove(id);
   }
 }
